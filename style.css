@@ -1,0 +1,31 @@
+* {margin: 0; padding: 0; }
+html {overflow-y: scroll;} 
+ul { list-style: none inside; }
+li { list-style: none inside; }
+a:focus { outline: none; }
+.clear { clear: both; }   /* <div class="clear"> </div> */
+a { text-decoration: none; color: black;}
+input, textarea { outline: none; }
+fieldset { border: none; }
+table { border-collapse: collapse; border-spacing: 0; }
+::-moz-selection{ background: orange; color: white; } 
+::selection { background: orange; color: white; }   
+
+/* TITLE, RULES, OPTIONS */
+.titleJoust { font-family: "Helvetica"; font-size: 28px; text-align: center; margin-top: 11px; }
+.rules { font-family: "Arial"; font-size: 12px; text-align: center; color: #4d4d4d; width: 470px; margin: 0 auto; margin-top: 7px;}
+.options { overflow: auto; width: 485px; margin: 0 auto; margin-top: 8px; }
+.options button { float: left; padding: 2px 7px; margin-right: 6px; font-size: 12px; }
+
+/* CSS FOR BOARD BELOW */
+#chessboard { padding: 0px; margin: 0 auto; margin-top: 7px; border: 2px solid #181818; }
+#chessboard tr td { width: 60px; height: 60px; }
+#chessboard tr:nth-child(2n+2) td:nth-child(2n+1) { background: #9f9f9f; }
+#chessboard tr:nth-child(2n+1) td:nth-child(2n+2) { background: #9f9f9f; }
+#chessboardInput { display: none; }
+
+div.whiteKnight img,
+div.blackKnight img { width: 50px; height: 50px; margin-left: 4px; margin-top: 4px; cursor: pointer; }
+
+#chessboard tr td.gone { background: #991d1d !important; }
+#chessboard tr td.movableGreenSpaces { background: lightgreen !important; cursor: pointer; }
