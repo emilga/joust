@@ -18,7 +18,8 @@ function findSpaces(piecePosition,computerMove) {
    
    // determine what spaces are unavailable 
    for (var i=0;i<openSpaces.length;i++) {
-        if ((currentBoard[openSpaces[i]-1] == 'x') || (currentBoard[openSpaces[i]-1] == 'B') || (currentBoard[openSpaces[i]-1] == 'W')) {
+        if ((currentBoard[openSpaces[i]-1] == 'x') || (currentBoard[openSpaces[i]-1] == 'B') || (currentBoard[openSpaces[i]-1] == 'W') ||
+            (openSpaces[i] < 1) || (openSpaces[i] > 64)) {
             if (spacesToRemove.indexOf(openSpaces[i]) == -1) { spacesToRemove.push(openSpaces[i]); }   
         }  
         // check if columns 1/2 overlap to columns 7/8
@@ -41,8 +42,6 @@ function findSpaces(piecePosition,computerMove) {
    
    // remove unavailable spaces so openSpaces will 
    // contain only the proper spaces you can move to
-   // (also contains values < 0 and values > 64)
-   // but these do not show up on 8x8 display board 
    for (var i=0;i<spacesToRemove.length;i++) {
         openSpaces.splice(openSpaces.indexOf(spacesToRemove[i]),1); 
    }    
@@ -54,7 +53,7 @@ function findSpaces(piecePosition,computerMove) {
        } 
        // computer won
        if ($('.movableGreenSpaces').length == 0) { 
-           alert('You Lost!!!!!!!!');
+           alert('You Lose!!!!!!!!');
            var angle = 0;
            setInterval(function(){ angle+=3; $(".blackKnight").rotate(angle); },20); 
        }

@@ -22,10 +22,14 @@ table { border-collapse: collapse; border-spacing: 0; }
 #chessboard tr td { width: 60px; height: 60px; }
 #chessboard tr:nth-child(2n+2) td:nth-child(2n+1) { background: #9f9f9f; }
 #chessboard tr:nth-child(2n+1) td:nth-child(2n+2) { background: #9f9f9f; }
-#chessboardInput { display: none; }
+#chessboardInput { visibility: hidden; }
 
 div.whiteKnight img,
 div.blackKnight img { width: 50px; height: 50px; margin-left: 4px; margin-top: 4px; cursor: pointer; }
 
-#chessboard tr td.gone { background: #991d1d !important; }
+#chessboard tr td.gone { 
+background:         #991d1d !important; 
+-moz-box-shadow:    0 0 1px #563737;
+-webkit-box-shadow: 0 0 1px #563737;
+box-shadow:         0 0 1px #563737; }
 #chessboard tr td.movableGreenSpaces { background: lightgreen !important; cursor: pointer; }
