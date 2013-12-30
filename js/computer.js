@@ -13,7 +13,7 @@ function computerMove(piecePositionComputer) {
         var mostOnwardMoves = new Array();
         passSpace[0] = openSpaces[g]; 
         var m = longestPath(passSpace,mostOnwardMoves,checkCircularPaths,0);
-        chooseFromPaths.push(Math.max.apply(null,m)-1);     
+        chooseFromPaths.push(Math.max.apply(null,m));     
     }
 
     // choose best space with most onward moves
@@ -49,8 +49,9 @@ function longestPath(initalSpaces,mostOnwardMoves,checkCircularPaths,pathLen) {
             }
             pathLen += 1;
             mostOnwardMoves.push(checkCircularPaths.length);
-            if (pathLen < 7) { longestPath(nextMoves[2],mostOnwardMoves,checkCircularPaths,pathLen); }
+            if (pathLen < 5) { longestPath(nextMoves[2],mostOnwardMoves,checkCircularPaths,pathLen); }
             checkCircularPaths.pop();
+            pathLen -= 1;
         } 
     }
     return mostOnwardMoves; 
