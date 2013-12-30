@@ -4,68 +4,57 @@ function computerMove(piecePositionComputer) {
     // find spaces computer can move to
     var spc = findSpaces(piecePositionComputer+1,true);
     var openSpaces = spc[2];
-    var mostOnwardMoves = new Array();
+    var chooseFromPaths = new Array();
     var checkCircularPaths = new Array();
-    
-    // determine where computer should move based on open positions...
-    // for the knight's tour, Warnsdorff's heuristic is a good approx so for 
-    // joust the computer will do something similar except move to a space
-    // where it will have the greatest onward moves... 
-    // cycling is prevented for 4 iterations of onward moves
-    for (var x=0;x<openSpaces.length;x++) {          
-        var sum = 0;
-        var moves = findSpaces(openSpaces[x],true); 
-        checkCircularPaths.push(openSpaces[x]);
-        checkCircularPaths.push(moves[2]);
-        for (var y=0;y<moves[2].length;y++) {      
-            sum += 1;  
-            var moves_2 = findSpaces(moves[2][y],true); 
-            for (var z=0;z<moves_2[2].length;z++) { 
-                // prevent cycling for 2nd set of spaces
-                if (checkCircularPaths.toString().indexOf(moves_2[2][z]) == -1) {   
-                    checkCircularPaths.push(moves_2[2][z]);                          
-                    sum += 1; 
-                    var moves_3 = findSpaces(moves_2[2][z],true);
-                    for (var w=0;w<moves_3[2].length;w++) { 
-                        // prevent cycling for 3rd set of spaces
-                        if (checkCircularPaths.toString().indexOf(moves_3[2][w]) == -1) { 
-                            checkCircularPaths.push(moves_3[2][w]);
-                            sum += 1;   
-                            var moves_4 = findSpaces(moves_3[2][w],true); 
-                            for (var v=0;v<moves_4[2].length;v++) { 
-                                // prevent cycling for 4th set of spaces
-                                if (checkCircularPaths.toString().indexOf(moves_4[2][v]) == -1) {    
-                                    sum += 1; 
-                                }            
-                            }   
-                        }       
-                    }   
-                }          
-            } 
-        } 
-        
-        mostOnwardMoves.push(sum);
-        checkCircularPaths = new Array();
-    }
-        
-    // choose best space with most onward moves
-    var lg = Math.max.apply(null,mostOnwardMoves); 
-    var bestSpace = openSpaces[mostOnwardMoves.indexOf(lg)];
 
-    console.log(openSpaces); 
-    console.log(mostOnwardMoves); 
-    console.log(bestSpace);
+    // determine longest path and go in that direction
+    var passSpace = new Array();
+    for (var g=0;g<openSpaces.length;g++) {
+        var mostOnwardMoves = new Array();
+        passSpace[0] = openSpaces[g]; 
+        var m = longestPath(passSpace,mostOnwardMoves,checkCircularPaths,0);
+        console.log(m);
+        chooseFromPaths.push(Math.max.apply(null,m)-1);     
+    }
+
+    // choose best space with most onward moves
+    var lg = Math.max.apply(null,chooseFromPaths); 
+    var bestSpace = openSpaces[chooseFromPaths.indexOf(lg)];
     
     // player won
-    if (mostOnwardMoves.length==0) { 
+    if (chooseFromPaths.length==0) { 
         alert("You Win!!!!!!!!!!!!!!");
-        var angle = 0;
-        setInterval(function(){ angle+=3; $(".whiteKnight").rotate(angle); },20); 
+        var angle = 0; setInterval(function(){ angle+=3; $(".whiteKnight").rotate(angle); },20); 
     } 
-    
-    // move black knight
     else { moveComputerPiece(piecePositionComputer+1,bestSpace,spc[1]); }
     
+    console.log('had spaces: '+openSpaces); 
+    console.log('best path lengths: '+chooseFromPaths); 
+    console.log('best space: '+bestSpace);
+    console.log("---------------------");
+    
+}
+
+// returns array with all possible path lengths
+function longestPath(initalSpaces,mostOnwardMoves,checkCircularPaths,pathLen) {  
+    for (var x=0;x<initalSpaces.length;x++) {
+        // make sure space was not visited
+        if (checkCircularPaths.toString().indexOf(initalSpaces[x]) == -1) {
+            checkCircularPaths.push(initalSpaces[x]);   
+            var nextMoves = findSpaces(initalSpaces[x],true);
+            // prevent cycling deeper in graph
+            for (var t=0;t<checkCircularPaths.length;t++) {
+                if (nextMoves[2].indexOf(checkCircularPaths[t]) != -1) { 
+                    nextMoves[2].splice(nextMoves[2].indexOf(checkCircularPaths[t]),1); 
+                }   
+            }
+            pathLen += 1;
+            mostOnwardMoves.push(checkCircularPaths.length);
+            if (pathLen < 7) { longestPath(nextMoves[2],mostOnwardMoves,checkCircularPaths,pathLen); }
+            checkCircularPaths.pop();
+        } 
+    }
+    return mostOnwardMoves; 
 }
 
 // move black knight to new space  

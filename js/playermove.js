@@ -41,7 +41,7 @@ function findSpaces(piecePosition,computerMove) {
    }  
    
    // remove unavailable spaces so openSpaces will 
-   // contain only the proper spaces you can move to
+   // contain only the proper spaces knight can move to
    for (var i=0;i<spacesToRemove.length;i++) {
         openSpaces.splice(openSpaces.indexOf(spacesToRemove[i]),1); 
    }    
@@ -54,8 +54,7 @@ function findSpaces(piecePosition,computerMove) {
        // computer won
        if ($('.movableGreenSpaces').length == 0) { 
            alert('You Lose!!!!!!!!');
-           var angle = 0;
-           setInterval(function(){ angle+=3; $(".blackKnight").rotate(angle); },20); 
+           var angle = 0; setInterval(function(){ angle+=3; $(".blackKnight").rotate(angle); },20); 
        }
    }  
    
