@@ -2,4 +2,4 @@
 
 Joust uses two knights from chess. The goal is to trap your opponent so that they have no moves available. You play as white.
 
-Demo: <a href='http://danielborowski.com/joust/display.html'>http://danielborowski.com/joust/</a>
+Demo: <a href='http://danielborowski.com/joust/display.html'>danielborowski.com/joust/</a>
