@@ -13,7 +13,6 @@ function computerMove(piecePositionComputer) {
         var mostOnwardMoves = new Array();
         passSpace[0] = openSpaces[g]; 
         var m = longestPath(passSpace,mostOnwardMoves,checkCircularPaths,0);
-        console.log(m);
         chooseFromPaths.push(Math.max.apply(null,m)-1);     
     }
 
